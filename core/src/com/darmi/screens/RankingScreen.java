@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class RankingScreen extends BaseScreen{
     private Stage stage;
     private Skin skin;
-    private TextButton volver, jugar,rankingPuntos;
+    private TextButton volver, jugar;
     private Image fondo;
     private Label primero,segundo,tercero;
 
@@ -47,7 +47,6 @@ public class RankingScreen extends BaseScreen{
         //instanciamos el boton de volver al menu y volver a jugar
         volver = new TextButton("Volver al menu", skin);
         jugar = new TextButton("Jugar", skin);
-        rankingPuntos=new TextButton("Puntos",skin);
         //Instanciamos los textos de los 3 primeros puestos
         primero=new Label("Puesto 1: ",skin);
         segundo=new Label("Puesto 2: ",skin);
@@ -67,13 +66,7 @@ public class RankingScreen extends BaseScreen{
         jugar.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(game.modoJuegoScreen);
-            }
-        });
-        rankingPuntos.addCaptureListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(game.rankingScreenPuntos);
+                game.setScreen(game.seleccionScreen);
             }
         });
 
@@ -83,7 +76,6 @@ public class RankingScreen extends BaseScreen{
         jugar.setPosition(90, 50);
         volver.setSize(120, 40);
         volver.setPosition(420, 50);
-        rankingPuntos.setPosition(500,300);
         primero.setPosition(230,220);
         segundo.setPosition(230,170);
         tercero.setPosition(230,120);
@@ -102,7 +94,6 @@ public class RankingScreen extends BaseScreen{
         stage.addActor(primero);
         stage.addActor(segundo);
         stage.addActor(tercero);
-        stage.addActor(rankingPuntos);
     }
     @Override
     public void show() {

@@ -226,12 +226,6 @@ public class GameScreen extends BaseScreen {
             vehiclesRespawn.run(3000);
         }
 
-        for (int i = 0; i < vehiculos.size(); i++){
-            if(vehiculos.get(i).getPosition().x < 20){
-            vehiculos.get(i).detach();
-            vehiculos.remove(i);
-            }
-        }
         //Añadimos dentro del lote lo que queremos dibujar
         loteSprites.begin();
         //scrolling background

@@ -16,10 +16,6 @@ public class MainGame extends Game {
 	protected GameOverScreen gameOverScreen;
 	protected RankingScreen rankingScreen;
 	protected Texture texture;
-	protected GameScreenPuntos gameScreenPuntos;
-	protected ModoJuegoScreen modoJuegoScreen;
-	protected SeleccionScreenPuntos seleccionScreenPuntos;
-	protected RankingScreenPuntos rankingScreenPuntos;
 
 	public AssetManager getManager() {
 		return manager;
@@ -59,14 +55,10 @@ public class MainGame extends Game {
 	public void finishLoading(){
 		//Termino de cargar mis pantalla
 		menuScreen=new MenuScreen(this);
-		modoJuegoScreen=new ModoJuegoScreen(this);
-		seleccionScreenPuntos=new SeleccionScreenPuntos(this);
 		gameScreen=new GameScreen(this);
-		gameScreenPuntos=new GameScreenPuntos(this);
 		creditsScreen=new CreditsScreen(this);
 		seleccionScreen=new SeleccionScreen(this);
 		gameOverScreen=new GameOverScreen(this);
-		rankingScreenPuntos=new RankingScreenPuntos(this);
 		rankingScreen=new RankingScreen(this);
 
 

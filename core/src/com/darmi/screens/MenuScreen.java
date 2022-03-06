@@ -37,8 +37,7 @@ public class MenuScreen extends BaseScreen{
         play.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
-                game.setScreen(game.modoJuegoScreen);
+                game.setScreen(game.seleccionScreen);
             }
         });
         //el boton de creditos nos llevara a la pantalla de creditos

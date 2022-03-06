@@ -18,10 +18,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class RankingScreen extends BaseScreen{
+public class RankingScreenPuntos extends BaseScreen{
     private Stage stage;
     private Skin skin;
-    private TextButton volver, jugar,rankingPuntos;
+    private TextButton volver, jugar,rankingTiempo;
     private Image fondo;
     private Label primero,segundo,tercero;
 
@@ -29,14 +29,10 @@ public class RankingScreen extends BaseScreen{
     private BufferedReader bfr;
     private String linea;
 
-    //Controlador de puntuaciones
-    private ArrayList<Integer> minutos;
-    private ArrayList<Integer> segundos;
-
     //Ranking
     private ArrayList<String> ranking;
 
-    public RankingScreen(final MainGame game) {
+    public RankingScreenPuntos(final MainGame game) {
         super(game);
         //instanciamos el fondo
         fondo=new Image(game.getManager().get("ranking.png", Texture.class));
@@ -47,7 +43,7 @@ public class RankingScreen extends BaseScreen{
         //instanciamos el boton de volver al menu y volver a jugar
         volver = new TextButton("Volver al menu", skin);
         jugar = new TextButton("Jugar", skin);
-        rankingPuntos=new TextButton("Puntos",skin);
+        rankingTiempo=new TextButton("Tiempo",skin);
         //Instanciamos los textos de los 3 primeros puestos
         primero=new Label("Puesto 1: ",skin);
         segundo=new Label("Puesto 2: ",skin);
@@ -70,10 +66,10 @@ public class RankingScreen extends BaseScreen{
                 game.setScreen(game.modoJuegoScreen);
             }
         });
-        rankingPuntos.addCaptureListener(new ChangeListener() {
+        rankingTiempo.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(game.rankingScreenPuntos);
+                game.setScreen(game.rankingScreen);
             }
         });
 
@@ -83,14 +79,11 @@ public class RankingScreen extends BaseScreen{
         jugar.setPosition(90, 50);
         volver.setSize(120, 40);
         volver.setPosition(420, 50);
-        rankingPuntos.setPosition(500,300);
+        rankingTiempo.setPosition(500,300);
         primero.setPosition(230,220);
         segundo.setPosition(230,170);
         tercero.setPosition(230,120);
 
-        //Inicializamos los arrays de control de tiempo
-        minutos = new ArrayList<>();
-        segundos = new ArrayList<>();
 
         //Inicializamos el array del ranking
         ranking = new ArrayList<>();
@@ -102,7 +95,7 @@ public class RankingScreen extends BaseScreen{
         stage.addActor(primero);
         stage.addActor(segundo);
         stage.addActor(tercero);
-        stage.addActor(rankingPuntos);
+        stage.addActor(rankingTiempo);
     }
     @Override
     public void show() {
@@ -110,79 +103,79 @@ public class RankingScreen extends BaseScreen{
         //Procesa todos los procesos del stage
         Gdx.input.setInputProcessor(stage);
 
-        try {
-            bfr = new BufferedReader(new FileReader("/data/data/com.darmi/files/ranking.txt"));
-            while ((linea = bfr.readLine()) != null) {
-                String partes[] = linea.split(" ");
-                minutos.add(Integer.parseInt(partes[0]));
-                segundos.add(Integer.parseInt(partes[2]));
-            }
-            bfr.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ordenarArrays();
-        minutos.removeAll(minutos);
-        segundos.removeAll(segundos);
-        //Asignamos a cada label correspondiente los primeros puestos del ranking
-
-        if(ranking.size() == 0){
-            primero.setText("Puesto 1: ");
-            segundo.setText("Puesto 2: ");
-            tercero.setText("Puesto 3: ");
-        }else if(ranking.size() == 1){
-            primero.setText("Puesto 1: "+ranking.get(0));
-        }else if(ranking.size() == 2){
-            primero.setText("Puesto 1: "+ranking.get(0));
-            segundo.setText("Puesto 2: "+ranking.get(1));
-        }else{
-            primero.setText("Puesto 1: "+ranking.get(0));
-            segundo.setText("Puesto 2: "+ranking.get(1));
-            tercero.setText("Puesto 3: "+ranking.get(2));
-        }
+//        try {
+//            bfr = new BufferedReader(new FileReader("/data/data/com.darmi/files/ranking.txt"));
+//            while ((linea = bfr.readLine()) != null) {
+//                String partes[] = linea.split(" ");
+//                minutos.add(Integer.parseInt(partes[0]));
+//                segundos.add(Integer.parseInt(partes[2]));
+//            }
+//            bfr.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        ordenarArrays();
+//        minutos.removeAll(minutos);
+//        segundos.removeAll(segundos);
+//        //Asignamos a cada label correspondiente los primeros puestos del ranking
+//
+//        if(ranking.size() == 0){
+//            primero.setText("Puesto 1: ");
+//            segundo.setText("Puesto 2: ");
+//            tercero.setText("Puesto 3: ");
+//        }else if(ranking.size() == 1){
+//            primero.setText("Puesto 1: "+ranking.get(0));
+//        }else if(ranking.size() == 2){
+//            primero.setText("Puesto 1: "+ranking.get(0));
+//            segundo.setText("Puesto 2: "+ranking.get(1));
+//        }else{
+//            primero.setText("Puesto 1: "+ranking.get(0));
+//            segundo.setText("Puesto 2: "+ranking.get(1));
+//            tercero.setText("Puesto 3: "+ranking.get(2));
+//        }
 
 
     }
 
     private void ordenarArrays() {
-        int minAux;
-        int segAux;
-        //Ordenamos los arrays de igual manera, para que cada minuto quede con sus respectivos segundos
-        for(int i = 0; i < (minutos.size() - 1); i++){
-            for(int j = (i+1); j < minutos.size(); j++){
-                //Si el minuto que hay en la 1 posicion es más pequeño que el de la segunda, hacemos un cambio de posicion de este minuto y de sus respectivos
-                //segundos
-                if(minutos.get(i) < minutos.get(j)){
-                    minAux = minutos.get(i);
-                    minutos.set(i, minutos.get(j));
-                    minutos.set(j, minAux);
-
-                    segAux = segundos.get(i);
-                    segundos.set(i, segundos.get(j));
-                    segundos.set(j, segAux);
-
-                    //En el caso de que los minutos sean iguales, hacemos la comprobacion con los segundos y seguimos el mismo procedimiento que con los minutos
-                }else if (minutos.get(i) == minutos.get(j)){
-                    //Si los segundos de i son mas pequeños que los de j, hacemos el cambio de minutos y de segundos
-                    if(segundos.get(i) < segundos.get(j)) {
-                        minAux = minutos.get(i);
-                        minutos.set(i, minutos.get(j));
-                        minutos.set(j, minAux);
-
-                        segAux = segundos.get(i);
-                        segundos.set(i, segundos.get(j));
-                        segundos.set(j, segAux);
-                    }
-
-                }
-            }
-        }
-        for(int i = 0; i < minutos.size(); i++){
-            ranking.add(minutos.get(i) + " Min " + segundos.get(i) + " seg");
-        }
+//        int minAux;
+//        int segAux;
+//        //Ordenamos los arrays de igual manera, para que cada minuto quede con sus respectivos segundos
+//        for(int i = 0; i < (minutos.size() - 1); i++){
+//            for(int j = (i+1); j < minutos.size(); j++){
+//                //Si el minuto que hay en la 1 posicion es más pequeño que el de la segunda, hacemos un cambio de posicion de este minuto y de sus respectivos
+//                //segundos
+//                if(minutos.get(i) < minutos.get(j)){
+//                    minAux = minutos.get(i);
+//                    minutos.set(i, minutos.get(j));
+//                    minutos.set(j, minAux);
+//
+//                    segAux = segundos.get(i);
+//                    segundos.set(i, segundos.get(j));
+//                    segundos.set(j, segAux);
+//
+//                    //En el caso de que los minutos sean iguales, hacemos la comprobacion con los segundos y seguimos el mismo procedimiento que con los minutos
+//                }else if (minutos.get(i) == minutos.get(j)){
+//                    //Si los segundos de i son mas pequeños que los de j, hacemos el cambio de minutos y de segundos
+//                    if(segundos.get(i) < segundos.get(j)) {
+//                        minAux = minutos.get(i);
+//                        minutos.set(i, minutos.get(j));
+//                        minutos.set(j, minAux);
+//
+//                        segAux = segundos.get(i);
+//                        segundos.set(i, segundos.get(j));
+//                        segundos.set(j, segAux);
+//                    }
+//
+//                }
+//            }
+//        }
+//        for(int i = 0; i < minutos.size(); i++){
+//            ranking.add(minutos.get(i) + " Min " + segundos.get(i) + " seg");
+//        }
     }
 
     @Override

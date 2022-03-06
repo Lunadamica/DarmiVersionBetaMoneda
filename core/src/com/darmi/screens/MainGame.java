@@ -19,6 +19,7 @@ public class MainGame extends Game {
 	protected GameScreenPuntos gameScreenPuntos;
 	protected ModoJuegoScreen modoJuegoScreen;
 	protected SeleccionScreenPuntos seleccionScreenPuntos;
+	protected RankingScreenPuntos rankingScreenPuntos;
 
 	public AssetManager getManager() {
 		return manager;
@@ -65,7 +66,9 @@ public class MainGame extends Game {
 		creditsScreen=new CreditsScreen(this);
 		seleccionScreen=new SeleccionScreen(this);
 		gameOverScreen=new GameOverScreen(this);
+		rankingScreenPuntos=new RankingScreenPuntos(this);
 		rankingScreen=new RankingScreen(this);
+
 
 		//Cambio la pantalla al menu principal
 		setScreen(menuScreen);

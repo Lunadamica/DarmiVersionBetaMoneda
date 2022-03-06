@@ -16,7 +16,7 @@ public class MainGame extends Game {
 	protected GameOverScreen gameOverScreen;
 	protected RankingScreen rankingScreen;
 	protected Texture texture;
-	protected GameScreenPuntos gameScreenPuntos;
+//	protected GameScreenPuntos gameScreenPuntos;
 
 	public AssetManager getManager() {
 		return manager;
@@ -39,7 +39,7 @@ public class MainGame extends Game {
 		manager.load("car_green_1.png",Texture.class);
 		manager.load("car_black_1.png",Texture.class);
 		manager.load("car_yellow_1.png",Texture.class);
-		manager.load("moneda.png",Texture.class);
+//		manager.load("moneda.png",Texture.class);
 		manager.load("tecla.ogg", Sound.class);
 		manager.load("choque.ogg", Sound.class);
 		manager.load("song.ogg", Music.class);
@@ -59,7 +59,7 @@ public class MainGame extends Game {
 		seleccionScreen=new SeleccionScreen(this);
 		gameOverScreen=new GameOverScreen(this);
 		rankingScreen=new RankingScreen(this);
-		gameScreenPuntos=new GameScreenPuntos(this);
+//		gameScreenPuntos=new GameScreenPuntos(this);
 		//Cambio la pantalla al menu principal
 		setScreen(menuScreen);
 	}

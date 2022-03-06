@@ -16,7 +16,9 @@ public class MainGame extends Game {
 	protected GameOverScreen gameOverScreen;
 	protected RankingScreen rankingScreen;
 	protected Texture texture;
-//	protected GameScreenPuntos gameScreenPuntos;
+	protected GameScreenPuntos gameScreenPuntos;
+	protected ModoJuegoScreen modoJuegoScreen;
+	protected SeleccionScreenPuntos seleccionScreenPuntos;
 
 	public AssetManager getManager() {
 		return manager;
@@ -39,10 +41,12 @@ public class MainGame extends Game {
 		manager.load("car_green_1.png",Texture.class);
 		manager.load("car_black_1.png",Texture.class);
 		manager.load("car_yellow_1.png",Texture.class);
-//		manager.load("moneda.png",Texture.class);
+		manager.load("modoJuego.png",Texture.class);
+		manager.load("moneda.png",Texture.class);
 		manager.load("tecla.ogg", Sound.class);
 		manager.load("choque.ogg", Sound.class);
 		manager.load("song.ogg", Music.class);
+		manager.load("moneda.ogg", Sound.class);
 		//Instanciamos una textura por defecto que usaremos para el coche del jugador
 		texture=new Texture("car_blue_1.png");
 
@@ -54,12 +58,15 @@ public class MainGame extends Game {
 	public void finishLoading(){
 		//Termino de cargar mis pantalla
 		menuScreen=new MenuScreen(this);
+		modoJuegoScreen=new ModoJuegoScreen(this);
+		seleccionScreenPuntos=new SeleccionScreenPuntos(this);
 		gameScreen=new GameScreen(this);
+		gameScreenPuntos=new GameScreenPuntos(this);
 		creditsScreen=new CreditsScreen(this);
 		seleccionScreen=new SeleccionScreen(this);
 		gameOverScreen=new GameOverScreen(this);
 		rankingScreen=new RankingScreen(this);
-//		gameScreenPuntos=new GameScreenPuntos(this);
+
 		//Cambio la pantalla al menu principal
 		setScreen(menuScreen);
 	}
